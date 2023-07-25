@@ -14,4 +14,10 @@ public interface Pizza {
 	List<Topping> getToppings();
 
 	String getSize();
+
+	int getNutritionInfo();
+
+	void setSize(String string);
+
+	boolean isFamiliare();
 }

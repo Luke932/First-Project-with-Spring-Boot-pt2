@@ -6,12 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component // Aggiungiamo l'annotazione @Component per rendere la classe un componente
-			// gestito da Spring
+@Component
 public class Margherita implements Pizza {
 	private List<Topping> toppings = new ArrayList<>();
 	private String size;
 	private String name = "Margherita";
+	private static final double FAMILY_SIZE_PRICE_MULTIPLIER = 1.8;
+	private static final double FAMILY_SIZE_CALORIES_MULTIPLIER = 1.8;
 
 	@Autowired
 	public Margherita(Topping pomodoro, Topping mozzarella) {
@@ -36,19 +37,35 @@ public class Margherita implements Pizza {
 	}
 
 	public Margherita createCopyWithNewName(String name, boolean includeCopySuffix) {
-		Margherita copiedPizza = new Margherita(includeCopySuffix ? name + " (copia)" : name);
+		Margherita copiedPizza = new Margherita(includeCopySuffix ? name : name);
 		copiedPizza.setSize(this.getSize());
-		copiedPizza.setToppings(new ArrayList<>(this.getToppings())); // Copia gli ingredienti senza ripetizioni
+		copiedPizza.setToppings(new ArrayList<>(this.getToppings()));
 		return copiedPizza;
 	}
 
-	@Override
-	public int getTotalCalories() {
+	// Metodo per calcolare il prezzo in base alla dimensione della pizza
+	private double calculatePrice() {
+		double basePrice = 4.0;
+		double totalToppingsPrice = 0.0;
+		for (Topping topping : toppings) {
+			totalToppingsPrice += topping.getPrice();
+		}
+		double finalPrice = basePrice + totalToppingsPrice;
+		return size.equals("Familiare") ? finalPrice * FAMILY_SIZE_PRICE_MULTIPLIER : finalPrice;
+	}
+
+	// Metodo per calcolare le calorie in base alla dimensione della pizza
+	private int calculateCalories() {
 		int totalCalories = 90;
 		for (Topping topping : toppings) {
 			totalCalories += topping.nutritionInfo();
 		}
-		return totalCalories;
+		return size.equals("Familiare") ? (int) (totalCalories * FAMILY_SIZE_CALORIES_MULTIPLIER) : totalCalories;
+	}
+
+	@Override
+	public int getTotalCalories() {
+		return calculateCalories();
 	}
 
 	@Override
@@ -63,12 +80,7 @@ public class Margherita implements Pizza {
 
 	@Override
 	public double getPrice() {
-		double basePrice = 6.0;
-		double totalToppingsPrice = 0.0;
-		for (Topping topping : toppings) {
-			totalToppingsPrice += topping.getPrice();
-		}
-		return basePrice + totalToppingsPrice;
+		return calculatePrice();
 	}
 
 	@Override
@@ -92,4 +104,14 @@ public class Margherita implements Pizza {
 	public void setToppings(List<Topping> toppings) {
 		this.toppings = toppings;
 	}
+
+	public boolean isFamiliare() {
+		return size.equals("Familiare");
+	}
+
+	@Override
+	public int getNutritionInfo() {
+		return getTotalCalories();
+	}
+
 }
