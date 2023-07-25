@@ -14,6 +14,8 @@ public class OrderItem {
 	private Item item;
 	private List<String> variations;
 	private String note;
+	private String name;
+	private double price;
 
 	public OrderItem(Item item) {
 		this.item = item;
@@ -23,6 +25,11 @@ public class OrderItem {
 
 	public void addVariation(String variation) {
 		variations.add(variation);
+	}
+
+	public OrderItem(String name, double price) {
+		this.name = name;
+		this.price = price;
 	}
 
 	public void removeVariation(String variation) {

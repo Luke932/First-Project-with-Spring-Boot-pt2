@@ -1,14 +1,24 @@
 package Luke932.First_Project_With_SpringBoot;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 public class Table {
 	private int tableNumber;
-	private int maxSeats;
+	private int numberOfSeats;
 	private boolean isOccupied;
+
+	public Table(int tableNumber, int numberOfSeats) {
+		this.tableNumber = tableNumber;
+		this.numberOfSeats = numberOfSeats;
+		this.isOccupied = false;
+	}
+
+	public int getNumberOfSeats() {
+		return numberOfSeats;
+	}
 }

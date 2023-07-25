@@ -2,13 +2,11 @@ package Luke932.First_Project_With_SpringBoot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication
-@ComponentScan("Luke932.First_Project_With_SpringBoot")
 @Slf4j
 public class FirstProjectWithSpringBootApplication {
 
@@ -16,8 +14,7 @@ public class FirstProjectWithSpringBootApplication {
 		SpringApplication.run(FirstProjectWithSpringBootApplication.class, args);
 
 		// Esercizio1
-		AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(
-				FirstProjectWithSpringBootApplication.class);
+		ConfigurableApplicationContext ctx = SpringApplication.run(FirstProjectWithSpringBootApplication.class, args);
 		log.info(ctx.getBean("getHth").toString());
 		System.out.println();
 
@@ -56,5 +53,4 @@ public class FirstProjectWithSpringBootApplication {
 
 		ctx.close();
 	}
-
 }
