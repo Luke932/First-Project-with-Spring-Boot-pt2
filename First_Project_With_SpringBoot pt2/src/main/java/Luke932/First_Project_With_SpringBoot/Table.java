@@ -15,7 +15,7 @@ public class Table {
 	public Table(int tableNumber, int numberOfSeats) {
 		this.tableNumber = tableNumber;
 		this.numberOfSeats = numberOfSeats;
-		this.isOccupied = false;
+		this.isOccupied = true;
 	}
 
 	public int getNumberOfSeats() {

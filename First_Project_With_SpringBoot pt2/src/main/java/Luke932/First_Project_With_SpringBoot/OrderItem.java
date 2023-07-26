@@ -14,7 +14,7 @@ public class OrderItem {
 	private Item item;
 	private List<String> variations;
 	private String note;
-	private String name;
+	private Margherita name;
 	private double price;
 
 	public OrderItem(Item item) {
@@ -27,8 +27,8 @@ public class OrderItem {
 		variations.add(variation);
 	}
 
-	public OrderItem(String name, double price) {
-		this.name = name;
+	public OrderItem(Margherita margherita1, double price) {
+		this.name = margherita1;
 		this.price = price;
 	}
 
